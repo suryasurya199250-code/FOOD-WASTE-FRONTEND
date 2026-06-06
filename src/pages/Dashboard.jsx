@@ -1,4 +1,3 @@
-
 import {useEffect,useState} from "react";
 import axios from "axios";
 
@@ -22,8 +21,14 @@ Authorization:`Bearer ${token}`
 
 const fetchFoods=async()=>{
 try{
-const res=await axios.get(`${import.meta.env.VITE_API_URL}/api/products`,config);
+
+const res=await axios.get(
+`${import.meta.env.VITE_API_URL}/api/products`,
+config
+);
+
 setFoods(res.data);
+
 }catch(err){
 console.log(err);
 }
@@ -37,11 +42,26 @@ const submit=async(e)=>{
 e.preventDefault();
 
 try{
+
 if(editingId){
-await axios.put(`${import.meta.env.VITE_API_URL}/api/products/${editingId}`,form,config);
+
+await axios.put(
+`${import.meta.env.VITE_API_URL}/api/products/${editingId}`,
+form,
+config
+);
+
 setEditingId(null);
+
 }else{
-await axios.post(`${import.meta.env.VITE_API_URL}/api/products`,form,config);
+
+await axios.post(
+`${import.meta.env.VITE_API_URL}/api/products`,
+form,
+config
+);
+
+}
 
 setForm({
 name:"",
@@ -49,6 +69,7 @@ description:""
 });
 
 fetchFoods();
+
 }catch(err){
 console.log(err);
 }
@@ -65,8 +86,14 @@ description:food.description
 
 const deleteFood=async(id)=>{
 try{
-await axios.delete(`${import.meta.env.VITE_API_URL}/api/products/${id}`,config);
+
+await axios.delete(
+`${import.meta.env.VITE_API_URL}/api/products/${id}`,
+config
+);
+
 fetchFoods();
+
 }catch(err){
 console.log(err);
 }
@@ -88,7 +115,10 @@ return(
 <div className="grid">
 
 <div className="form-card">
-<h2>{editingId ? "Edit Food" : "Add Food"}</h2>
+
+<h2>
+{editingId ? "Edit Food" : "Add Food"}
+</h2>
 
 <form onSubmit={submit}>
 
@@ -110,25 +140,39 @@ onChange={(e)=>setForm({...form,description:e.target.value})}
 </button>
 
 </form>
+
 </div>
 
 <div className="list-card">
+
 <h2>Available Food</h2>
 
 {foods.map((food)=>(
-<div className="food-item" key={food._id}>
+<div
+className="food-item"
+key={food._id}
+>
 
 <h3>{food.name}</h3>
+
 <p>{food.description}</p>
 
 <div className="action-row">
-<button className="edit-btn" onClick={()=>editFood(food)}>
+
+<button
+className="edit-btn"
+onClick={()=>editFood(food)}
+>
 Edit
 </button>
 
-<button className="delete-btn" onClick={()=>deleteFood(food._id)}>
+<button
+className="delete-btn"
+onClick={()=>deleteFood(food._id)}
+>
 Delete
 </button>
+
 </div>
 
 </div>
