@@ -1,9 +1,9 @@
-
 import {useState} from "react";
 import axios from "axios";
 import {Link,useNavigate} from "react-router-dom";
 
 export default function Login(){
+
 const navigate=useNavigate();
 
 const [form,setForm]=useState({
@@ -15,9 +15,16 @@ const submit=async(e)=>{
 e.preventDefault();
 
 try{
-const res=axios.post(`${import.meta.env.VITE_API_URL}/api/auth/login`,form);
+
+const res=await axios.post(
+`${import.meta.env.VITE_API_URL}/api/auth/login`,
+form
+);
+
 localStorage.setItem("token",res.data.token);
+
 navigate("/dashboard");
+
 }catch(err){
 alert(err.response?.data?.message || "Login Failed");
 }
@@ -26,6 +33,7 @@ alert(err.response?.data?.message || "Login Failed");
 return(
 <div className="auth-container">
 <form className="auth-card" onSubmit={submit}>
+
 <h2>Food Waste Prevention</h2>
 
 <input
@@ -45,6 +53,7 @@ onChange={(e)=>setForm({...form,password:e.target.value})}
 <div className="link">
 <Link to="/register">Create Account</Link>
 </div>
+
 </form>
 </div>
 );
