@@ -1,4 +1,3 @@
-
 import {useState} from "react";
 import axios from "axios";
 import {Link,useNavigate} from "react-router-dom";
@@ -17,8 +16,14 @@ const submit=async(e)=>{
 e.preventDefault();
 
 try{
-await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/register`,form);
+
+await axios.post(
+`${import.meta.env.VITE_API_URL}/api/auth/register`,
+form
+);
+
 navigate("/");
+
 }catch(err){
 alert(err.response?.data?.message || "Register Failed");
 }
@@ -27,6 +32,7 @@ alert(err.response?.data?.message || "Register Failed");
 return(
 <div className="auth-container">
 <form className="auth-card" onSubmit={submit}>
+
 <h2>Create Account</h2>
 
 <input
@@ -52,6 +58,7 @@ onChange={(e)=>setForm({...form,password:e.target.value})}
 <div className="link">
 <Link to="/">Back To Login</Link>
 </div>
+
 </form>
 </div>
 );
